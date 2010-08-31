@@ -12,3 +12,21 @@
 
 (ns euler2)
 
+(def fib-seq
+  "Generate a lazy fibonacci sequence with corecursion"
+  (lazy-cat [0 1] (map + (rest fib-seq) fib-seq))
+  )
+
+(def small-fib
+  "Sequence of fibonacci below 4 million"
+  (take-while #(<= % 4000000) fib-seq)
+  )
+
+(def even-small-fib
+  "All fibonacci nums below 4 million and even"
+  (filter #(even? %) small-fib)
+  )
+ 
+(print
+  (apply + even-small-fib)
+  )
