@@ -18,3 +18,5 @@ main = putStrLn $
    show ( sum [ fibs!!n | n <- [1..50]
       ,((fibs!!n) `mod` 2) == 0
       , fibs!!n < 4000000 ] )
+
+-- pokey suggested: sum $ takeWhile (< 4000000) $ filter ((== 0) . ((flip mod) 2)) fibs
