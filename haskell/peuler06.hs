@@ -7,11 +7,11 @@
  -}
 
 -- find the sum of the squares of the numbers 1..n
-sumOfSquares :: Int -> Int
+sumOfSquares :: Integer -> Integer
 sumOfSquares n = sum $ map (\x -> x*x) [1..n]
 
 -- find the square of a sum
-squareOfSum :: Int -> Int
+squareOfSum :: Integer -> Integer
 squareOfSum n = sum [1..n] ^ 2 
 
 main = do
