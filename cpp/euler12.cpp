@@ -41,8 +41,10 @@ int main(){
 		for(unsigned int f = 1U; f < midwaydivisor; f++) {
 			if(currentTriangle%f == 0) {
 				divisorList[index++] = f;
-				if(f != currentTriangle/f) divisorList[index++] = currentTriangle/f;
-				if(currentTriangle/f < midwaydivisor) {midwaydivisor = currentTriangle/f;}
+				if(f != currentTriangle/f)
+					divisorList[index++] = currentTriangle/f;
+				if(currentTriangle/f < midwaydivisor)
+					midwaydivisor = currentTriangle/f;
 			}
 		}
 
