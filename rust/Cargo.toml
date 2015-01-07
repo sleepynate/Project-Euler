@@ -1,0 +1,5 @@
+[package]
+
+name = "project-euler"
+version = "0.0.1"
+authors = ["nathan dotz <nathan.dotz@gmail.com>"]
