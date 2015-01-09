@@ -1,9 +1,11 @@
 #![feature(associated_types)]
 
 use std::mem;
+use std::num::Float;
+use std::collections::DList;
 
 #[allow(dead_code)]
-fn fizzbuzz(i: i32) -> i32 {
+fn fizzbuzz(i: u32) -> u32 {
     range(0, i)
         .filter(|&x| x % 3 == 0 || x % 5 == 0)
         .fold(0, |a, b| a + b)
@@ -20,13 +22,13 @@ fn problem1_solves() {
 }
 
 struct Fibonacci {
-    curr: uint,
-    next: uint,
+    curr: u32,
+    next: u32,
 }
 
 impl Iterator for Fibonacci {
-    type Item = uint;
-    fn next(&mut self) -> Option<uint> {
+    type Item = u32;
+    fn next(&mut self) -> Option<u32> {
         let new_next = self.curr + self.next;
         let new_curr = mem::replace(&mut self.next, new_next);
         Some(mem::replace(&mut self.curr, new_curr))
@@ -41,7 +43,7 @@ fn fibs() -> Fibonacci {
 
 #[test]
 fn problem2_generates_a_sequence() {
-    let actual = fibs().take(10).collect::<Vec<uint>>();
+    let actual = fibs().take(10).collect::<Vec<u32>>();
     assert_eq!(actual, [1, 2, 3, 5, 8, 13, 21, 34, 55, 89]);
 }
 
@@ -52,4 +54,35 @@ fn problem2_solves() {
                     .take_while(|&x| x <= 4000000)
                     .fold(0, |a, b| a + b);
     assert_eq!(actual, 4613732)
+}
+
+#[allow(dead_code)]
+fn prime_factors(n:u64) -> DList<u64> {
+    let helper = |i:u64| -> DList<u64> {
+     let mut l = DList::new();
+     l.push_front(i);
+     l.append(prime_factors(n/i));
+     l
+    };
+    let mut possible_divisors = range(2, ((n as f64).sqrt() as u64)); //.collect::<Vec<u32>>();
+    let first_divisor = possible_divisors.find(|&x| n % x == 0);
+    let rest_of_factors = first_divisor.map(|i| helper(i));
+    let mut this_is_prime = DList::new();
+    this_is_prime.push_front(n);
+    if rest_of_factors.is_some() {
+        rest_of_factors.unwrap()
+    } else {
+        this_is_prime
+    }
+
+}
+
+#[test]
+fn problem3_given() {
+    assert_eq!(prime_factors(13195).pop_back().unwrap(), 29);
+}
+
+#[test]
+fn problem3_solves() {
+    assert_eq!(prime_factors(600851475143).pop_back().unwrap(), 6857);
 }
