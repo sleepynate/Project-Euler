@@ -1,5 +1,6 @@
 use std::mem;
 use std::collections::LinkedList;
+#[allow(unused_imports)]
 use std::str::FromStr;
 
 #[allow(dead_code)]
@@ -83,4 +84,47 @@ fn problem3_given() {
 #[test]
 fn problem3_solves() {
     assert_eq!(prime_factors(600851475143).pop_back().unwrap(), 6857);
+}
+
+#[allow(dead_code)]
+fn reverse_string(s: &str) -> String {
+    s.chars().rev().collect()
+}
+
+#[test]
+fn problem4_can_reverse_string() {
+    let actual = reverse_string(&String::from_str("abc").unwrap());
+    assert_eq!(actual, String::from_str("cba").unwrap());
+}
+
+#[allow(dead_code)]
+fn is_palindrome(s: &String) -> bool {
+    s.eq(&reverse_string(s))
+}
+
+#[test]
+fn problem4_is_string_palindrome() {
+    assert!(is_palindrome(&String::from_str("abba").unwrap()));
+}
+
+#[allow(dead_code)]
+fn is_number_palindrome(n: u32) -> bool {
+    is_palindrome(&n.to_string())
+}
+
+#[test]
+fn problem4_is_number_palindrom() {
+    assert!(!is_number_palindrome(123325));
+    assert!(is_number_palindrome(123321))
+}
+
+#[allow(dead_code)]
+fn biggest_number_with_digits(n: u32) -> u32 {
+    (10 as u32).pow(n) - 1
+}
+
+#[test]
+fn problem4_biggest_number_with_digits() {
+    assert_eq!(biggest_number_with_digits(2), 99);
+    assert_eq!(biggest_number_with_digits(4), 9999)
 }
