@@ -1,12 +1,10 @@
-#![feature(associated_types)]
-
 use std::mem;
-use std::num::Float;
-use std::collections::DList;
+use std::collections::LinkedList;
+use std::str::FromStr;
 
 #[allow(dead_code)]
 fn fizzbuzz(i: u32) -> u32 {
-    range(0, i)
+    (0..i)
         .filter(|&x| x % 3 == 0 || x % 5 == 0)
         .fold(0, |a, b| a + b)
 }
@@ -57,17 +55,17 @@ fn problem2_solves() {
 }
 
 #[allow(dead_code)]
-fn prime_factors(n:u64) -> DList<u64> {
-    let helper = |i:u64| -> DList<u64> {
-     let mut l = DList::new();
+fn prime_factors(n:u64) -> LinkedList<u64> {
+    let helper = |i:u64| -> LinkedList<u64> {
+     let mut l = LinkedList::new();
      l.push_front(i);
-     l.append(prime_factors(n/i));
+     l.append(&mut prime_factors(n/i));
      l
     };
-    let mut possible_divisors = range(2, ((n as f64).sqrt() as u64)); //.collect::<Vec<u32>>();
+    let mut possible_divisors = 2 .. ((n as f64).sqrt() as u64);
     let first_divisor = possible_divisors.find(|&x| n % x == 0);
     let rest_of_factors = first_divisor.map(|i| helper(i));
-    let mut this_is_prime = DList::new();
+    let mut this_is_prime = LinkedList::new();
     this_is_prime.push_front(n);
     if rest_of_factors.is_some() {
         rest_of_factors.unwrap()
