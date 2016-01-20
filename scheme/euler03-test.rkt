@@ -5,7 +5,7 @@
 
 (define tests
   (test-suite
-   "Tests for Project Euler problem 1"
+   "Tests for Project Euler problem 3"
 
    (check-equal? (prime-factors 1) '() "1 is not prime nor has prime factors")
    (check-equal? (prime-factors 2) '(2) "2 is prime")
