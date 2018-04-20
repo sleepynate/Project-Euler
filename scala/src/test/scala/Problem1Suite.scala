@@ -6,28 +6,20 @@ class Problem1Suite extends FunSuite with Problem1 {
    * Find the sum of all the multiples of 3 or 5 below 1000.
    */
 
-  var expected = 0
-  var target = 3
-  test(s"sum of all fizzbuzz numbers below ${target} is ${expected}") {
-    assert(problem1(target) == expected)
+  test(s"sum of all fizzbuzz numbers below 3 is 0") {
+    assert(problem1(3) == 0)
   }
 
-  expected = 3
-  target = 4
-  test(s"sum of all fizzbuzz numbers below ${target} is ${expected}") {
-    assert(problem1(target) == expected)
+  test(s"sum of all fizzbuzz numbers below 4 is 3") {
+    assert(problem1(4) == 3)
   }
 
-  expected = 8
-  target = 6
-  test(s"sum of all fizzbuzz numbers below ${target} is ${expected}") {
-    assert(problem1(target) == expected)
+  test(s"sum of all fizzbuzz numbers below 6 is 8") {
+    assert(problem1(6) == 8)
   }
 
-  expected = 233168
-  target = 1000
-  test(s"sum of all fizzbuzz numbers below ${target} is ${expected}") {
-    assert(problem1(target) == expected)
+  test(s"sum of all fizzbuzz numbers below 1000 is 233168") {
+    assert(problem1(1000) == 233168)
   }
 
 }

@@ -1,7 +1,5 @@
 package com.sleepynate.euler
 
-import scala.collection.immutable.Range.Inclusive
-
 trait Problem3 {
 
   implicit def Long2PrimeFactorsInt(v: Long) = new PrimeFactorsInt(v)

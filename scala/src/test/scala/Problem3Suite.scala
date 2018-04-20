@@ -8,18 +8,18 @@ class Problem3Suite extends FunSuite with Matchers with Problem3 {
    */
 
   test("largest prime factor of 3 is 3") {
-    3.primeFactors.last should be(3)
+    3.primeFactors.lastOption should be(Some(3))
   }
 
   test("largest prime factor of 15 is 5") {
-    15.primeFactors.last should be(5)
+    15.primeFactors.lastOption should be(Some(5))
   }
 
   test("largest prime factor of 13195 is 29") {
-    13195.primeFactors.last should be(29)
+    13195.primeFactors.lastOption should be(Some(29))
   }
 
   test("largest prime factor of 600851475143 is 6857") {
-    600851475143L.primeFactors.last should be(6857)
+    600851475143L.primeFactors.lastOption should be(Some(6857))
   }
 }

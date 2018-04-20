@@ -1,14 +1,14 @@
 name :="project euler"
 
-scalaVersion :="2.10.3"
+scalaVersion :="2.12.5"
 
 version :="0.1"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.10" % "2.1.0" % "test"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.5"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
 
 resolvers += Resolver.sonatypeRepo("releases")
 
-addCompilerPlugin("org.brianmckenna" %% "wartremover" % "0.7")
+addCompilerPlugin("org.wartremover" %% "wartremover" % "2.2.1")
 
-scalacOptions in (Compile, compile) += "-P:wartremover:traverser:org.brianmckenna.wartremover.warts.Unsafe"
-
+scalacOptions += "-P:wartremover:traverser:org.wartremover.warts.Unsafe"
