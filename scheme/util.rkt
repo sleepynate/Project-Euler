@@ -1,6 +1,6 @@
 #lang racket
 
-(provide range sum)
+(provide range sum not-null)
 
 (define (range low high)
   (if (> low high)
@@ -12,3 +12,6 @@
 
 (define (sum x)
   (apply + x))
+
+(define (not-null x)
+  (not (null? x)))

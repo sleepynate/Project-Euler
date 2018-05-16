@@ -5,7 +5,7 @@
 
 (define bnl (string->list bignum))
 
-(define tests
+(define tests-08
   (test-suite
    "Tests for Project Euler Problem 8"
    (test-case "Can convert digits to int values"
@@ -21,4 +21,4 @@
               (check-eq? (max-product-digit-window 13 bignum) 0))))
 
 (require rackunit/text-ui)
-(run-tests tests)
+(run-tests tests-08)
