@@ -11,7 +11,7 @@
 
 #lang racket
 
-(provide sum-of-squares square-of-sum difference-of-sums-and-squares answer)
+(provide sum-of-squares square-of-sum difference-of-sums-and-squares answer-06)
 
 (define (sum-of-squares low high)
   (apply + (map sqr (range low (+ 1 high)))))
@@ -22,5 +22,21 @@
 (define (difference-of-sums-and-squares low high)
   (- (square-of-sum low high) (sum-of-squares low high)))
 
-(define (answer)
+(define (answer-06)
   (difference-of-sums-and-squares 1 100))
+
+(module+ main
+  (printf "~a ~a ~a\n"
+          "Problem 6: The difference between the sum of the squares of the first"
+          "100 natural numbers and the square of the sum is"
+          (answer-06)))
+
+(module+ test
+  (require rackunit)
+
+  (test-case "sum of squares from 1 to 10"
+             (check-equal? (sum-of-squares 1 10) 385))
+  (test-case  "square of sum from 1 to 10"
+              (check-equal? (square-of-sum 1 10) 3025))
+  (test-case  "difference of 1 to 10"
+              (check-equal? (difference-of-sums-and-squares 1 10) 2640)))
