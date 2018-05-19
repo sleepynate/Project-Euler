@@ -26,3 +26,33 @@
 
 (define (not-null x)
   (not (null? x)))
+
+(module util-lazy lazy
+  (provide nats
+           primes
+           take-while
+           nth-primes )
+
+  (define nats
+    (cons 1 (map add1 nats)))
+  (define (sift n l)
+    (filter (λ(x) (not (zero? (modulo x n)))) l))
+  (define (when-bigger n l f)
+    (if (< (car l) n) (cons (car l) (when-bigger n (cdr l) f)) (f l)))
+  (define (sieve l ps)
+    (cons (car l) (when-bigger (* (car ps) (car ps)) (cdr l)
+                               (λ(t) (sieve (sift (car ps) t) (cdr ps))))))
+  (define primes (sieve (cdr nats) primes))
+
+  (define (nth-primes n) (!! (take n primes)))
+
+  (define (take-while f s)
+    (let [(x (first (!! (take 1 s))))]
+      (if (f x)
+          (cons x (take-while f (rest s)))
+          empty))))
+
+(module+ test
+  (require lazy/force
+           (submod ".." util-lazy))
+  (check-equal? (!! (take-while (λ(x) (< x 5)) nats)) '(1 2 3 4)))
