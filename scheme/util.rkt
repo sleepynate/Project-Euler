@@ -27,6 +27,18 @@
 (define (not-null x)
   (not (null? x)))
 
+(define (all f xs)
+  (if (empty? xs)
+      #t
+      (if (f (first xs))
+          (all f (rest xs))
+          #f)))
+
+(module+ test
+  (check-true (all null '()))
+  (check-true (all (λ(x) (< x 10)) (list 1 2 3 4 5)))
+  (check-false (all (λ(x) (> x 0)) (list 1 2 -3 4 5))))
+
 (module util-lazy lazy
   (provide nats
            primes
