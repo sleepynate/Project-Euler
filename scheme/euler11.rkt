@@ -76,39 +76,38 @@
   (check-equal? (first (col-quples grid)) '(08 49 81 52))
   (check-equal? (last  (col-quples grid)) '(36 16 54 48)))
 
-(define (downright-quples g)
-  (filter not-null
-          (apply append
-          (for/list ([y (in-range 0 (length g))])
-            (for/list ([x (in-range 0 (length (list-ref g y)))])
-              (if (and (< (+ y 3) (length g))
-                       (< (+ x 3) (length (list-ref g y))))
-                  (list
-                   (list-ref (list-ref g    y)       x)
-                   (list-ref (list-ref g (+ y 1)) (+ x 1))
-                   (list-ref (list-ref g (+ y 2)) (+ x 2))
-                   (list-ref (list-ref g (+ y 3)) (+ x 3)))
-
-                  null))))))
-
-(module+ test
-  (check-equal? (first (downright-quples grid)) '(8 49 31 23))
-  (check-equal? (last  (downright-quples grid)) '(40 4 5 48)))
-
-(define (downleft-quples g)
+(define (diag-iter g f)
   (filter not-null
           (apply append
                  (for/list ([y (in-range 0 (length g))])
                    (for/list ([x (in-range 0 (length (list-ref g y)))])
                      (if (and (< (+ y 3) (length g))
                               (< (+ x 3) (length (list-ref g y))))
-                         (list
-                          (list-ref (list-ref g    y)    (+ x 3))
-                          (list-ref (list-ref g (+ y 1)) (+ x 2))
-                          (list-ref (list-ref g (+ y 2)) (+ x 1))
-                          (list-ref (list-ref g (+ y 3))      x))
+
+                         (f g x y)
 
                          null))))))
+
+(define (downright-quples g)
+  (diag-iter g (λ (g x y)
+                 (list
+                  (list-ref (list-ref g    y)       x)
+                  (list-ref (list-ref g (+ y 1)) (+ x 1))
+                  (list-ref (list-ref g (+ y 2)) (+ x 2))
+                  (list-ref (list-ref g (+ y 3)) (+ x 3))))))
+
+
+(module+ test
+  (check-equal? (first (downright-quples grid)) '(8 49 31 23))
+  (check-equal? (last  (downright-quples grid)) '(40 4 5 48)))
+
+(define (downleft-quples g)
+  (diag-iter g (λ (g x y)
+                 (list
+                  (list-ref (list-ref g    y)    (+ x 3))
+                  (list-ref (list-ref g (+ y 1)) (+ x 2))
+                  (list-ref (list-ref g (+ y 2)) (+ x 1))
+                  (list-ref (list-ref g (+ y 3))      x)))))
 
 (module+ test
   (check-equal? (first (downleft-quples grid)) '(97 99 49 52))
