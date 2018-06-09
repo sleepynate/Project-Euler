@@ -39,10 +39,23 @@
   (check-true (all (λ(x) (< x 10)) (list 1 2 3 4 5)))
   (check-false (all (λ(x) (> x 0)) (list 1 2 -3 4 5))))
 
+(define (take-while f s)
+  (if (empty? s) null
+      (let [(x (first s))]
+        (if (f x)
+            (cons x (take-while f (rest s)))
+            null))))
+
+(module+ test
+  (check-equal? (take-while (λ(x) x) null) null)
+  (check-equal? (take-while (λ(x) (< x 4)) (list 1 2 3 4 5)) (list 1 2 3))
+  (check-equal? (take-while (λ(x) (> x 0)) (list 1 2 -3 4 5)) (list 1 2)))
+
+
 (module util-lazy lazy
   (provide nats
            primes
-           take-while
+           lazy-while
            nth-primes )
 
   (define nats
@@ -58,13 +71,13 @@
 
   (define (nth-primes n) (!! (take n primes)))
 
-  (define (take-while f s)
+  (define (lazy-while f s)
     (let [(x (first (!! (take 1 s))))]
       (if (f x)
-          (cons x (take-while f (rest s)))
+          (cons x (lazy-while f (rest s)))
           empty))))
 
 (module+ test
   (require lazy/force
            (submod ".." util-lazy))
-  (check-equal? (!! (take-while (λ(x) (< x 5)) nats)) '(1 2 3 4)))
+  (check-equal? (!! (lazy-while (λ(x) (< x 5)) nats)) '(1 2 3 4)))
