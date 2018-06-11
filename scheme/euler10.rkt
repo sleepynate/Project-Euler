@@ -11,4 +11,4 @@
 (module+ main
   (printf "~a ~a\n"
           "Problem 10: The sum of all the primes below two million is"
-          (sum (!! (lazy-while (λ(x) (< x 2000000)) primes)))))
+          (sum (!! (lazy-takef primes (λ(x) (< x 2000000)))))))
