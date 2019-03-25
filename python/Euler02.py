@@ -6,10 +6,32 @@
 # the previous two terms. By starting with 1 and 2, the first
 # 10 terms will be:
 # 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
-# 
+#
 # Find the sum of all the even-valued terms in the sequence
 # which do not exceed four million.
 #
+
+from itertools import takewhile, islice
+import unittest
+
+class FibonacciTests(unittest.TestCase):
+
+    def test_fibs_contains_correct_sequence(self):
+        "Fibonacci Sequence generated appropriately"
+        ns = take(6, fibs())
+        self.assertEqual([1, 1, 2, 3, 5, 8], ns)
+
+    def test_can_make_predicates(self):
+        "Can create predicate lambdas"
+        f = make_predicate(5)
+        self.assertTrue(f(4))
+        self.assertFalse(f(6))
+
+    def test_is_even(self):
+        "Do we really need to test even or odd?"
+        self.assertTrue(is_even(2))
+        self.assertFalse(is_even(3))
+
 
 def fibs():
     a = b = 1
@@ -17,7 +39,13 @@ def fibs():
         yield a
         a, b = b, a + b
 
-def max_test(y): return y <= 4000000
+def take(n, iterable): return list(islice(iterable, n))
 
-import itertools
-print "Sum of all even fibonacci numbers below 4 million is: ",sum(x for x in itertools.takewhile(max_test, fibs()) if not x%2)
+def make_predicate(n): return lambda y: y <= n
+
+def is_even(n): return not n % 2
+
+if __name__ == "__main__":
+    max_test = make_predicate(4000000)
+    total = sum(x for x in takewhile(max_test, fibs()) if is_even(x))
+    print("Sum of all even fibonacci numbers below 4 million is: ", total)
