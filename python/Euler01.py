@@ -9,4 +9,31 @@
 # nathan (period) dotz (at sign) gmail (period) com
 #
 
-print "Sum of all multiples of 3 or 5 below 1000: ",sum([x for x in range(1,1000) if not x%3 or not x%5])
+import unittest
+
+class FizzBuzzTest(unittest.TestCase):
+    def test_upto_4(self):
+        """[1, 2, 3] -> [3]"""
+        self.assertEqual(fizzbuzz(4), 3)
+
+    def test_upto_5(self):
+        """[1, 2, 3, 4] -> [3]"""
+        self.assertEqual(fizzbuzz(5), 3)
+
+    def test_upto_6(self):
+        """[1, 2, 3, 4, 5] -> [3, 5]"""
+        self.assertEqual(fizzbuzz(6), 8)
+
+
+    def test_answer(self):
+        self.assertEqual(fizzbuzz(1000), 233168)
+
+def filter(x):
+    return not x % 3 or not x % 5
+
+def fizzbuzz(end):
+    candidates = range(1, end)
+    return sum([x for x in candidates if filter(x)])
+
+if __name__ == '__main__':
+    print("Sum of all multiples of 3 or 5 below 1000: ", fizzbuzz(1000))
