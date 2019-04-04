@@ -1,4 +1,3 @@
-#
 # Project Euler Problem 3
 # Solution by nathan dotz - nathan (period) dotz (at sign) gmail (period) com
 #
@@ -45,4 +44,5 @@ def prime_factors(x):
     if x > 1:
         yield x
 
-print("The largest prime factor of", bignum,"is",reduce(lambda x,y:y, prime_factors(bignum)))
+if __name__ == "__main__":
+    print("The largest prime factor of", bignum,"is",reduce(lambda x,y:y, prime_factors(bignum)))
